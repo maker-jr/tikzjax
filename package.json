@@ -1,19 +1,22 @@
 {
-    "name": "@drgrice1/tikzjax",
-    "version": "1.0.0-beta24",
+    "name": "@planktimerr/tikzjax",
+    "version": "1.0.63",
     "description": "TikZJax loader",
-    "author": "Jim Fowler",
+    "author": "Umar Yabo Umar",
     "contributors": [
-        "Glenn Rice"
+        "Glenn Rice",
+        "Umar Yabo Umar"
     ],
     "license": "GPL-3.0+",
     "main": "tikzjax.js",
     "repository": {
         "type": "git",
-        "url": "git+https://github.com/drgrice1/tikzjax.git"
+        "url": "git+https://github.com/maker-jr/tikzjax.git"
     },
     "files": [
-        "dist"
+        "dist",
+        "genTexFiles.js",
+        "installFonts.mjs"
     ],
     "scripts": {
         "format": "prettier --write .",

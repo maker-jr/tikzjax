@@ -14,7 +14,7 @@ let view = null;
 let fileLoader = null;
 let finished = null;
 
-export const pages = 2500;
+export const pages = 1100;
 
 let DATA_ADDR = (pages - 100) * 1024 * 64;
 let END_ADDR = pages * 1024 * 64;

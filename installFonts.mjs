@@ -6,6 +6,11 @@ import { tmpdir } from 'os';
 import path from 'path';
 import decompress from 'decompress';
 import { Font, woff2 } from 'fonteditor-core';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
 
 await woff2.init();
 
@@ -17,8 +22,9 @@ https.get('https://us.mirrors.cicku.me/ctan/fonts/cm/ps-type1/bakoma.zip', (resp
     response.pipe(file);
     file.on('finish', async () => {
         file.close();
-        const files = await decompress(zipFile, tmpDir, { filter: (file) => path.extname(file.path) === '.otf' });
-        fs.mkdirSync(path.join(import.meta.dirname, 'dist', 'fonts'), { recursive: true });
+        const files = await decompress(zipFile, tmpDir, { filter: (file) => file.path && path.extname(file.path) === '.otf' });
+
+        fs.mkdirSync(path.join(__dirname, 'dist', 'fonts'), { recursive: true });
         for (const file of files) {
             const basename = path.basename(file.path);
             // The opentype fonts need to be used because the unicode character for a soft hyphen is used by the
@@ -28,7 +34,7 @@ https.get('https://us.mirrors.cicku.me/ctan/fonts/cm/ps-type1/bakoma.zip', (resp
             const buffer = await fs.promises.readFile(path.join(tmpDir, file.path));
             const font = Font.create(buffer, { type: 'otf', hinting: true, kerning: true });
             await fs.promises.writeFile(
-                path.join(import.meta.dirname, 'dist', 'fonts', basename.replace(/\.otf$/, '.woff2')),
+                path.join(__dirname, 'dist', 'fonts', basename.replace(/\.otf$/, '.woff2')),
                 font.write({ type: 'woff2', hinting: true, kerning: true })
             );
         }
